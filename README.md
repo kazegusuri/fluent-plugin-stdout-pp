@@ -1,4 +1,4 @@
-# fluent-plugin-stdout-pp
+# fluent-plugin-stdout-pp, a plugin for [Fluentd](http://fluentd.org)
 
 A fluentd plugin to pretty print json with color to stdout
 
