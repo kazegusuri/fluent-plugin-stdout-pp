@@ -1,5 +1,7 @@
 # fluent-plugin-stdout-pp
 
+[![Build Status](https://travis-ci.org/sabottenda/fluent-plugin-stdout-pp.svg)](https://travis-ci.org/sabottenda/fluent-plugin-stdout-pp)
+
 A fluentd plugin to pretty print json with color to stdout
 
 ## Installation
