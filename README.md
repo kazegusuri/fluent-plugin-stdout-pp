@@ -1,4 +1,4 @@
-# fluent-plugin-stdout-pp
+# fluent-plugin-stdout-pp, a plugin for [Fluentd](http://fluentd.org)
 
 [![Build Status](https://travis-ci.org/sabottenda/fluent-plugin-stdout-pp.svg)](https://travis-ci.org/sabottenda/fluent-plugin-stdout-pp)
 
