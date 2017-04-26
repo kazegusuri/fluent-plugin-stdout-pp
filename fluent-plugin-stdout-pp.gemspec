@@ -20,4 +20,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency "fluentd"
   spec.add_dependency "coderay"
   spec.add_development_dependency "rake"
+  spec.add_development_dependency "test-unit", "> 3"
 end
