@@ -20,10 +20,6 @@ module Fluent
       white:   "\033[1;37m",
     }
 
-    def initialize
-      super
-    end
-
     def configure(conf)
       super
 
