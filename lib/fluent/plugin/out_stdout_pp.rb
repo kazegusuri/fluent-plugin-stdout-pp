@@ -4,10 +4,10 @@ module Fluent
   class StdoutPPOutput < Output
     Fluent::Plugin.register_output('stdout_pp', self)
 
-    config_param :pp, :bool, :default => true
-    config_param :time_color, :string, :default => 'blue'
-    config_param :tag_color, :string, :default => 'yellow'
-    config_param :record_colored, :bool, :default => true
+    config_param :pp, :bool, default: true
+    config_param :time_color, :string, default: 'blue'
+    config_param :tag_color, :string, default: 'yellow'
+    config_param :record_colored, :bool, default: true
 
     TTY_COLOR = {
       normal:  "\033[0;39m",
