@@ -4,6 +4,13 @@
 
 A fluentd plugin to pretty print json with color to stdout
 
+## Requirements
+
+| fluent-plugin-stdout-pp | fluentd    | ruby   |
+|-------------------------|------------|--------|
+| >= 0.2.0                | >= v0.14.0 | >= 2.1 |
+| < 0.2.0                 | >= v0.12.0 | >= 1.9 |
+
 ## Installation
 
 Add this line to your application's Gemfile:
