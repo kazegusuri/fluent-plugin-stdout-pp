@@ -1,7 +1,7 @@
 require 'coderay'
 
-module Fluent
-  class StdoutPPOutput < Output
+module Fluent::Plugin
+  class StdoutPPOutput < Fluent::Plugin::Output
     Fluent::Plugin.register_output('stdout_pp', self)
 
     config_param :pp, :bool, default: true
@@ -34,7 +34,7 @@ module Fluent
       end
     end
 
-    def emit(tag, es, chain)
+    def process(tag, es)
       tag_colored = TTY_COLOR[@tag_color] + tag + TTY_COLOR[:normal]
       es.each do |time, record|
         time_colored = TTY_COLOR[@time_color] + Time.at(time).localtime.to_s + TTY_COLOR[:normal]
@@ -44,10 +44,9 @@ module Fluent
           json = Yajl.dump(record)
         end
         json = CodeRay.scan(json, :json).terminal if @record_colored
-        $log.write "#{time_colored} #{tag_colored}: #{json}\n"
+        log.write "#{time_colored} #{tag_colored}: #{json}\n"
       end
-      $log.flush
-      chain.next
+      log.flush
     end
   end
 end
