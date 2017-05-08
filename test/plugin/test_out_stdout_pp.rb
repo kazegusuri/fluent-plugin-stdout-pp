@@ -10,7 +10,7 @@ class StdoutOutputPPTest < Test::Unit::TestCase
   ]
 
   def create_driver(conf = CONFIG)
-    Fluent::Test::OutputTestDriver.new(Fluent::StdoutPPOutput).configure(conf)
+    Fluent::Test::Driver::Output.new(Fluent::Plugin::StdoutPPOutput).configure(conf)
   end
 
   def test_configure
@@ -19,28 +19,37 @@ class StdoutOutputPPTest < Test::Unit::TestCase
     assert_equal Symbol, d.instance.tag_color.class
   end
 
-  def test_emit
+  def test_process
     d = create_driver
-    time = Time.now
-    out = capture { d.emit({'test' => 'test'}, time) }
-    assert_equal "\e[1;34m#{time.localtime}\e[0;39m \e[1;33mtest\e[0;39m: {\n  \e[35m\e[1;35m\"\e[0m\e[35mtest\e[1;35m\"\e[0m\e[35m\e[0m: \e[31m\e[1;31m\"\e[0m\e[31mtest\e[1;31m\"\e[0m\e[31m\e[0m\n}\n", out
+    time = event_time
+    localtime = time2str(time, localtime: true, format: '%Y-%m-%d %H:%M:%S %z')
+    d.run(default_tag: 'test') do
+      d.feed(time, {'test' => 'test'})
+    end
+    assert_equal "\e[1;34m#{localtime}\e[0;39m \e[1;33mtest\e[0;39m: {\n  \e[35m\e[1;35m\"\e[0m\e[35mtest\e[1;35m\"\e[0m\e[35m\e[0m: \e[31m\e[1;31m\"\e[0m\e[31mtest\e[1;31m\"\e[0m\e[31m\e[0m\n}\n", d.logs.first
   end
 
-  def test_emit_no_color
+  def test_process_no_color
     d = create_driver(CONFIG + "record_colored false\n")
-    time = Time.now
+    time = event_time
+    localtime = time2str(time, localtime: true, format: '%Y-%m-%d %H:%M:%S %z')
     record = {'test' => 'test'}
-    out = capture { d.emit(record, time) }
-    assert_equal "\e[1;34m#{time.localtime}\e[0;39m \e[1;33mtest\e[0;39m: #{JSON.pretty_generate(record)}\n", out
+    d.run(default_tag: 'test') do
+      d.feed(time, record)
+    end
+    assert_equal "\e[1;34m#{localtime}\e[0;39m \e[1;33mtest\e[0;39m: #{JSON.pretty_generate(record)}\n", d.logs.first
   end
 
-  def test_emit_without_pp
+  def test_process_without_pp
     d = create_driver(CONFIG + "pp false\n")
-    time = Time.now
+    time = event_time
+    localtime = time2str(time, localtime: true, format: '%Y-%m-%d %H:%M:%S %z')
     record = {'test' => 'test'}
-    out = capture { d.emit(record, time) }
+    d.run(default_tag: 'test') do
+      d.feed(time, record)
+    end
 
-    assert_equal "\e[1;34m#{time.localtime}\e[0;39m \e[1;33mtest\e[0;39m: {\e[35m\e[1;35m\"\e[0m\e[35mtest\e[1;35m\"\e[0m\e[35m\e[0m:\e[31m\e[1;31m\"\e[0m\e[31mtest\e[1;31m\"\e[0m\e[31m\e[0m}\n", out
+    assert_equal "\e[1;34m#{localtime}\e[0;39m \e[1;33mtest\e[0;39m: {\e[35m\e[1;35m\"\e[0m\e[35mtest\e[1;35m\"\e[0m\e[35m\e[0m:\e[31m\e[1;31m\"\e[0m\e[31mtest\e[1;31m\"\e[0m\e[31m\e[0m}\n", d.logs.first
   end
 end
 
