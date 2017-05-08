@@ -48,5 +48,9 @@ module Fluent::Plugin
       end
       log.flush
     end
+
+    def multi_workers_ready?
+      true
+    end
   end
 end
