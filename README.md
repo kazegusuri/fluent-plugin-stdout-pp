@@ -22,7 +22,7 @@ Or install it yourself as:
 
 ```
 <match **>
-  type stdout_pp
+  @type stdout_pp
   time_color blue
   tag_color yellow
 </match>
