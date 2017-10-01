@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = "fluent-plugin-stdout-pp"
-  spec.version       = "0.1.0"
+  spec.version       = "0.2.0"
   spec.authors       = ["Masahiro Sano"]
   spec.email         = ["sabottenda@gmail.com"]
   spec.description   = %q{A fluentd plugin to pretty print json with color to stdout}
@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "fluentd", ">= 0.12.0", "< 2"
+  spec.add_dependency "fluentd", ">= 0.14.12", "< 2"
   spec.add_dependency "coderay"
   spec.add_development_dependency "rake"
   spec.add_development_dependency "test-unit", "> 3"
